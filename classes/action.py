@@ -1,20 +1,22 @@
+from collections import Callable
+from dataclasses import dataclass
+
 from classes.player import Player
 
 
+@dataclass
 class Action:
-
-    def __init__(self, method, name, command):
-        self.method = method
-        self.name = name
-        self.command = command
+    method: Callable
+    name: str
+    command: str
 
 
 actions = [
-    Action(method=Player.move_north, name='Move north', command='w'),
-    Action(method=Player.move_south, name='Move south', command='s'),
-    Action(method=Player.move_east, name='Move east', command='d'),
-    Action(method=Player.move_west, name='Move west', command='a'),
-    Action(method=Player.look, name='Look', command='look'),
-    Action(method=Player.examine_item, name='Examine item', command='examine'),
-    Action(method=Player.examine_item, name='Examine item', command='exam')
+    Action(Player.move_north, 'Move north', 'w'),
+    Action(Player.move_south, 'Move south', 's'),
+    Action(Player.move_east, 'Move east', 'd'),
+    Action(Player.move_west, 'Move west', 'a'),
+    Action(Player.look, 'Look', 'look'),
+    Action(Player.examine_item, 'Examine item', 'examine'),
+    Action(Player.examine_item, 'Examine item', 'exam')
 ]

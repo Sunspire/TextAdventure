@@ -1,10 +1,13 @@
+from dataclasses import dataclass
+
+
+@dataclass
 class Item:
-    def __init__(self, name, description, value=0):
-        self.value = value
-        self.name = name
-        self.description = description
+    name: str
+    value: int
+    description: str = ''
 
 
 class Weapon(Item):
     def __init__(self, name, description, value):
-        super().__init__(name, description, value=value)
+        super().__init__(name, value, description)
