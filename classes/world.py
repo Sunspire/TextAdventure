@@ -16,17 +16,16 @@ class World:
                     self.tiles[(xx, yy)] = [cols[xx].replace('\n', '')]
 
     def tile_exists(self, coords=(-1, -1)):
-        if self.tiles.get(coords) is None:
-            return False
-        else:
-            return self.tiles.get(coords) is not None
+        return self.tiles.get(coords) is not None
 
     def test_override(self):
         cup = Item('cup', 'some foul smelling liquid is inside')
         book = Item('book', 'it contains drawings of legendary creatures')
         the_items = [cup, book]
+
         self.tiles[(0, 0)] = [
-            '''You see a sign with the word "TEST" written on it.
-Various items are floating in the air.
-In the distance you see nothing but darkness.''', the_items
+            "You see a sign with the word \"TEST\" written on it.\n"
+            "Various items are floating in the air.\n"
+            "In the distance you see nothing but darkness.\n",
+            the_items
         ]
