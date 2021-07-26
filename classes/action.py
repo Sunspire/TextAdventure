@@ -1,4 +1,4 @@
-from classes.player import player
+from classes.player import Player
 
 
 class action:
@@ -11,16 +11,16 @@ class action:
 def action_list():
     act_list = []
     act_list.append(
-        action(method=player.move_north, name='Move north', command='w'))
+        action(method=Player.move_north, name='Move north', command='w'))
     act_list.append(
-        action(method=player.move_south, name='Move south', command='s'))
+        action(method=Player.move_south, name='Move south', command='s'))
     act_list.append(
-        action(method=player.move_east, name='Move east', command='d'))
+        action(method=Player.move_east, name='Move east', command='d'))
     act_list.append(
-        action(method=player.move_west, name='Move west', command='a'))
-    act_list.append(action(method=player.look, name='Look', command='look'))
-    act_list.append(action(method=player.examine_item, name='Examine item',
+        action(method=Player.move_west, name='Move west', command='a'))
+    act_list.append(action(method=Player.look, name='Look', command='look'))
+    act_list.append(action(method=Player.examine_item, name='Examine item',
                            command='examine'))
     act_list.append(
-        action(method=player.examine_item, name='Examine item', command='exam'))
+        action(method=Player.examine_item, name='Examine item', command='exam'))
     return act_list

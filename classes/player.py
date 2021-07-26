@@ -1,7 +1,7 @@
 from functions.general import output
 
 
-class player:
+class Player:
     def __init__(self, name, description, hp):
         self.name = name
         self.description = description

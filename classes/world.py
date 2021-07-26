@@ -1,7 +1,7 @@
-from classes.item import item
+from classes.item import Item
 
 
-class world:
+class World:
     def __init__(self):
         self.tiles = {}
 
@@ -22,8 +22,8 @@ class world:
             return self.tiles.get(coords) is not None
 
     def test_override(self):
-        cup = item('cup', 'some foul smelling liquid is inside')
-        book = item('book', 'it contains drawings of legendary creatures')
+        cup = Item('cup', 'some foul smelling liquid is inside')
+        book = Item('book', 'it contains drawings of legendary creatures')
         the_items = [cup, book]
         self.tiles[(0, 0)] = [
             '''You see a sign with the word "TEST" written on it.

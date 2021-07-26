@@ -1,13 +1,13 @@
 from functions.general import *
-from classes.player import player
-from classes.world import world
+from classes.player import Player
+from classes.world import World
 from classes.action import action_list
 
 is_exit = 0
-the_player = player('Solargazer', 'An adventurer', 100)
+the_player = Player('Solargazer', 'An adventurer', 100)
 the_player.x = 0
 the_player.y = 0
-the_world = world()
+the_world = World()
 the_world.load_tiles()
 actions = action_list()
 
@@ -34,7 +34,7 @@ def evaluate_command(the_input):
                     command_not_found = False
                     break
 
-            if (command_not_found):
+            if command_not_found:
                 print(output('Unknown command', 'red'))
 
 
