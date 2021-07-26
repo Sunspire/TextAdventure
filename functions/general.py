@@ -1,15 +1,17 @@
-def output(text, color_code):
-    color_codes = {}
-    color_codes['reset'] = 0  # resets all colors
-    color_codes['black'] = 30
-    color_codes['red'] = 31
-    color_codes['green'] = 32
-    color_codes['yellow'] = 33
-    color_codes['blue'] = 34
-    color_codes['magenta'] = 35
-    color_codes['cyan'] = 36
-    color_codes['gray'] = 37
+color_codes = {
+    'reset': 0,
+    'black': 30,
+    'red': 31,
+    'green': 32,
+    'yellow': 33,
+    'blue': 34,
+    'magenta': 35,
+    'cyan': 36,
+    'gray': 37
+}
 
+
+def output(text, color_code):
     if color_codes.get(color_code) is None:
         return '\33[31mfuntions > general > output > Unknown color'
     else:
