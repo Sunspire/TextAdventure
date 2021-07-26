@@ -1,4 +1,4 @@
-from functions.general import *
+from functions.general import output
 from classes.player import Player
 from classes.world import World
 from classes.action import actions
