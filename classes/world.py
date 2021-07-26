@@ -8,12 +8,10 @@ class World:
     def load_tiles(self):
         with open('resources/map.txt', 'r') as f:
             rows = f.readlines()
-            x_max = len(rows[0].split('\t'))
 
-            for yy in range(len(rows)):
-                cols = rows[yy].split('\t')
-                for xx in range(x_max):
-                    self.tiles[(xx, yy)] = [cols[xx].replace('\n', '')]
+        for y, cols in enumerate(rows):
+            for x, cell in enumerate(cols.split('\t')):
+                self.tiles[(x, y)] = [cell.replace('\n', '')]
 
     def tile_exists(self, coords=(-1, -1)):
         return self.tiles.get(coords) is not None
