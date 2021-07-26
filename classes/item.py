@@ -4,8 +4,8 @@ from dataclasses import dataclass
 @dataclass
 class Item:
     name: str
-    value: int
     description: str = ''
+    value: int = 0
 
 
 class Weapon(Item):
