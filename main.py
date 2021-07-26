@@ -11,11 +11,12 @@ the_world = world()
 the_world.load_tiles()
 actions = action_list()
 
+
 def evaluate_command(the_input):
     the_input = the_input.strip().lower()
     if the_input != '':
         command_not_found = True
-        
+
         if the_input == 'exit':
             confirm_exit = input(output('are you sure (y/n)? > ', 'yellow'))
             if confirm_exit.strip().lower() == 'y':
@@ -35,10 +36,12 @@ def evaluate_command(the_input):
 
             if (command_not_found):
                 print(output('Unknown command', 'red'))
-#testing
+
+
+# testing
 the_world.test_override()
 
-while is_exit == 0:    
-    #print(output("({},{})".format(the_player.x, the_player.y), 'green'))
+while is_exit == 0:
+    # print(output("({},{})".format(the_player.x, the_player.y), 'green'))
     command = input(output('{} > '.format(the_player), 'cyan'))
     evaluate_command(command)

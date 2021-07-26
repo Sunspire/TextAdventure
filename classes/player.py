@@ -1,6 +1,7 @@
 from functions.general import output
 
-class player():
+
+class player:
     def __init__(self, name, description, hp):
         self.name = name
         self.description = description
@@ -8,10 +9,10 @@ class player():
         self.x = 0
         self.y = 0
         self.command = ''
-    
+
     def __str__(self):
         return "{}, {}".format(self.name, self.hp)
-    
+
     def move(self, lx, ly, the_world, direction):
         if the_world.tile_exists((self.x + lx, self.y + ly)):
             self.x += lx
@@ -44,7 +45,7 @@ class player():
         if len(the_tile) >= 2:
             print('')
             print(output('You see the following items:', 'green'))
-            item_list = the_tile[1] 
+            item_list = the_tile[1]
             for i in item_list:
                 print(output('- {}'.format(i.name), 'green'))
 
@@ -62,17 +63,17 @@ class player():
                 print(output('{}'.format(self.name), 'green'))
                 print(output('{}'.format(self.description), 'green'))
 
-            elif (len(the_tile) >= 2):
-                item_list = the_tile[1] 
+            elif len(the_tile) >= 2:
+                item_list = the_tile[1]
                 for i in item_list:
                     if i.name == item_to_examine:
                         print(output('{}'.format(i.description), 'green'))
                         item_not_found = False
                         break
-                
+
                 if item_not_found:
                     print(output("You don't see that.", 'yellow'))
-            
+
             else:
                 print(output("There is nothing to examine.", 'yellow'))
 

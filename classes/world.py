@@ -1,6 +1,7 @@
 from classes.item import item
 
-class world():
+
+class world:
     def __init__(self):
         self.tiles = {}
 
@@ -24,6 +25,8 @@ class world():
         cup = item('cup', 'some foul smelling liquid is inside')
         book = item('book', 'it contains drawings of legendary creatures')
         the_items = [cup, book]
-        self.tiles[(0,0)] = ['''You see a sign with the word "TEST" written on it.
+        self.tiles[(0, 0)] = [
+            '''You see a sign with the word "TEST" written on it.
 Various items are floating in the air.
-In the distance you see nothing but darkness.''', the_items]
+In the distance you see nothing but darkness.''', the_items
+        ]
