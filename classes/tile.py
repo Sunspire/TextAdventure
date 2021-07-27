@@ -1,13 +1,19 @@
-import classes.item
+from dataclasses import dataclass
 
-class maptile:
-    def __init__(self, x, y, description=''):
-        self.x = x
-        self.y = y
-        self.description = description
 
-class tile(maptile):
-    def __init__(self, x, y, description='', items=[]):
-        self.items = items
+class MapTile(dataclass):
+
+    x: int
+    y: int
+    description: str = ''
+
+
+class Tile(MapTile):
+
+    def __init__(self, x, y, description='', items=None):
         super().__init__(x, y, description)
-        
+
+        if items is None:
+            items = []
+
+        self.items = items

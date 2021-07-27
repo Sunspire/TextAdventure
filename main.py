@@ -1,44 +1,48 @@
-from functions.general import *
-from classes.player import player
-from classes.world import world
-from classes.action import action_list
+from functions.general import output
+from classes.player import Player
+from classes.world import World
+from classes.action import actions
 
-is_exit = 0
-the_player = player('Solargazer', 'An adventurer', 100)
-the_player.x = 0
-the_player.y = 0
-the_world = world()
+is_exit = False
+
+the_player = Player('Solargazer', 'An adventurer', 100)
+
+the_world = World()
 the_world.load_tiles()
-actions = action_list()
+
 
 def evaluate_command(the_input):
     the_input = the_input.strip().lower()
-    if the_input != '':
-        command_not_found = True
-        
-        if the_input == 'exit':
-            confirm_exit = input(output('are you sure (y/n)? > ', 'yellow'))
-            if confirm_exit.strip().lower() == 'y':
-                global is_exit
-                is_exit = 1
-                print(output('', 'reset'))
-            else:
-                print(output('Returning to game.', 'green'))
-        else:
-            first_word_in_command = the_input.split()[0]
-            for i in range(len(actions)):
-                if first_word_in_command == actions[i].command:
-                    the_player.command = the_input
-                    the_player.do_action(actions[i], the_world)
-                    command_not_found = False
-                    break
 
-            if (command_not_found):
-                print(output('Unknown command', 'red'))
-#testing
+    if not the_input:
+        return
+
+    if the_input == 'exit':
+        confirm_exit = input(output('are you sure (y/n)? > ', 'yellow'))
+
+        if confirm_exit.strip().lower() == 'y':
+            print(output('', 'reset'))
+            return True
+
+        print(output('Returning to game.', 'green'))
+        return False
+
+    first_word_in_command = the_input.split()[0]
+
+    for action in actions:
+        if action.command == first_word_in_command:
+            the_player.command = the_input
+            the_player.do_action(action, the_world)
+            break
+    else:
+        print(output('Unknown command', 'red'))
+
+    return False
+
+
+# testing
 the_world.test_override()
 
-while is_exit == 0:    
-    #print(output("({},{})".format(the_player.x, the_player.y), 'green'))
+while not is_exit:
     command = input(output('{} > '.format(the_player), 'cyan'))
-    evaluate_command(command)
+    is_exit = evaluate_command(command)
