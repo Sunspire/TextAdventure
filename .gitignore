@@ -4,3 +4,6 @@ __pycache__
 
 # Pycharm config
 .idea
+
+# test scripts
+*test*

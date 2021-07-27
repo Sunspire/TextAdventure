@@ -10,7 +10,6 @@ color_codes = {
     'gray': 37
 }
 
-
 def output(text, color_code):
     if color_codes.get(color_code) is None:
         return '\33[31mfuntions > general > output > Unknown color'

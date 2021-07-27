@@ -1,15 +1,15 @@
+import functions.globals
 from functions.general import output
 from classes.player import Player
-from classes.world import World
 from classes.action import actions
 
+
+functions.globals.initialize()
+
 is_exit = False
-
 the_player = Player('Solargazer', 'An adventurer', 100)
-
-the_world = World()
-the_world.load_tiles()
-
+the_world = functions.globals.the_world
+current_tile = the_world.tiles[(the_player.x, the_player.y)]
 
 def evaluate_command(the_input):
     the_input = the_input.strip().lower()
@@ -32,7 +32,7 @@ def evaluate_command(the_input):
     for action in actions:
         if action.command == first_word_in_command:
             the_player.command = the_input
-            the_player.do_action(action, the_world)
+            the_player.do_action(action)
             break
     else:
         print(output('Unknown command', 'red'))

@@ -18,5 +18,6 @@ actions = [
     Action(Player.move_west, 'Move west', 'a'),
     Action(Player.look, 'Look', 'look'),
     Action(Player.examine_item, 'Examine item', 'examine'),
-    Action(Player.examine_item, 'Examine item', 'exam')
+    Action(Player.examine_item, 'Examine item', 'exam'),
+    Action(Player.take_item, 'Take item', 'take')
 ]

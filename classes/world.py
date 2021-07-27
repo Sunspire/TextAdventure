@@ -1,5 +1,6 @@
 from classes.item import Item
 
+the_world = None
 
 class World:
     def __init__(self):
