@@ -12,19 +12,17 @@ class World:
 
         for y, cols in enumerate(rows):
             for x, cell in enumerate(cols.split('\t')):
-                self.tiles[(x, y)] = [cell.replace('\n', '')]
+                if cell is not None:
+                    self.tiles[(x, y)] = [cell.replace('\n', '')]
 
     def tile_exists(self, coords=(-1, -1)):
         return self.tiles.get(coords) is not None
 
     def test_override(self):
-        cup = Item('cup', 'some foul smelling liquid is inside')
-        book = Item('book', 'it contains drawings of legendary creatures')
-        the_items = [cup, book]
-
         self.tiles[(0, 0)] = [
             "You see a sign with the word \"TEST\" written on it.\n"
             "Various items are floating in the air.\n"
             "In the distance you see nothing but darkness.\n",
-            the_items
+            [Item('cup', 'some foul smelling liquid is inside')
+            ,Item('book', 'it contains drawings of legendary creatures')]
         ]
