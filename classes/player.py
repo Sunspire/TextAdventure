@@ -1,5 +1,7 @@
-from functions.general import output
 import functions.globals
+import colorama
+from termcolor import colored
+
 
 class Player:
     def __init__(self, name, description, hp):
@@ -22,13 +24,13 @@ class Player:
 
     def move(self, lx, ly, direction):
         if not functions.globals.the_world.tile_exists((self.x + lx, self.y + ly)):
-            print(output('you cannot move there', 'yellow'))
+            print(colored('You cannot move there.', 'yellow'))
             return
 
         self.x += lx
         self.y += ly
 
-        print(output('You move {}.'.format(direction), 'green'))
+        print(colored(f'You move {direction}.', 'green'))
         self.look()
 
     def move_north(self):
@@ -47,7 +49,7 @@ class Player:
         words_in_command = self.command.split()
 
         if len(words_in_command) == 1:
-            print(output('Take what?', 'yellow'))
+            print(colored('Take what?', 'yellow'))
         else:
             item_to_take = words_in_command[1]
             the_tile = functions.globals.the_world.tiles[(self.x, self.y)]
@@ -58,10 +60,10 @@ class Player:
                 for item in item_list:
                     if item.name == item_to_take:
                         if self.item_exists(item):
-                            print(output('You already have that item.', 'yellow'))
+                            print(colored('You already have that item.', 'yellow'))
                             item_not_found = False
                         else:
-                            print(output('You take: {}.'.format(item.name), 'green'))
+                            print(colored(f'You take: {item.name}.', 'green'))
                             self.inventory[item.name] = item
                             item_taken = item
                             item_not_found = False
@@ -73,52 +75,52 @@ class Player:
                     functions.globals.the_world.tiles[(self.x, self.y)] = the_tile
 
                 if item_not_found:
-                    print(output("You don't find that.", 'yellow'))
+                    print(colored("You don't find that.", 'yellow'))
             
             else:
-                print(output('There is nothing to take.', 'yellow'))
+                print(colored('There is nothing to take.', 'yellow'))
 
     def look(self):
         the_tile = functions.globals.the_world.tiles[(self.x, self.y)]
-        print(output(the_tile[0], 'green'))
+        print(colored(the_tile[0], 'green'))
 
         if len(the_tile) < 2:
             return
 
         print()
-        print(output('You see the following items:', 'green'))
+        print(colored('You see the following items:', 'green'))
 
         item_list = the_tile[1]
-        for i in item_list:
-            print(output(f'- {i.name}', 'green'))
+        for item in item_list:
+            print(colored(f'- {item.name}', 'green'))
 
     def examine_item(self):
         words_in_command = self.command.split()
 
         if len(words_in_command) == 1:
-            print(output('Examine what?', 'yellow'))
+            print(colored('Examine what?', 'yellow'))
             return
 
         item_to_examine = words_in_command[1]
         the_tile = functions.globals.the_world.tiles[(self.x, self.y)]
 
         if item_to_examine == 'self':
-            print(output(self.name, 'green'))
-            print(output(self.description, 'green'))
+            print(colored(self.name, 'green'))
+            print(colored(self.description, 'green'))
             return
 
         if len(the_tile) < 2:
-            print(output("There is nothing to examine.", 'yellow'))
+            print(colored('There is nothing to examine.', 'yellow'))
             return
 
         item_list = the_tile[1]
 
-        for i in item_list:
-            if i.name == item_to_examine:
-                print(output(i.description, 'green'))
+        for item in item_list:
+            if item.name == item_to_examine:
+                print(colored(item.description, 'green'))
                 break
         else:
-            print(output("You don't see that.", 'yellow'))
+            print(colored("You don't see that.", 'yellow'))
 
     def do_action(self, action):
         action_method = getattr(self, action.method.__name__)
