@@ -1,19 +1,6 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
-
-class MapTile(dataclass):
-
-    x: int
-    y: int
+@dataclass
+class Tile:
     description: str = ''
-
-
-class Tile(MapTile):
-
-    def __init__(self, x, y, description='', items=None):
-        super().__init__(x, y, description)
-
-        if items is None:
-            items = []
-
-        self.items = items
+    items: list = field(default_factory=list)

@@ -18,7 +18,7 @@ def evaluate_command(the_input):
     if not the_input:
         return
 
-    if the_input == 'exit':
+    if the_input == 'q':
         confirm_exit = input(colored('are you sure (y/n)? > ', 'yellow'))
 
         if confirm_exit.strip().lower() == 'y':

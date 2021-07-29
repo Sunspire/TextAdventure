@@ -54,8 +54,8 @@ class Player:
             item_to_take = words_in_command[1]
             the_tile = functions.globals.the_world.tiles[(self.x, self.y)]
             item_not_found = True
-            if len(the_tile) >= 2:
-                item_list = the_tile[1] 
+            item_list = the_tile.items
+            if (item_list is not None and len(item_list) > 0):
                 item_taken = None
                 for item in item_list:
                     if item.name == item_to_take:
@@ -71,7 +71,7 @@ class Player:
 
                 if item_taken is not None:
                     item_list.remove(item_taken)
-                    the_tile[1] = item_list
+                    the_tile.items = item_list
                     functions.globals.the_world.tiles[(self.x, self.y)] = the_tile
 
                 if item_not_found:
@@ -82,12 +82,9 @@ class Player:
 
     def look(self):
         the_tile = functions.globals.the_world.tiles[(self.x, self.y)]
-        print(colored(the_tile[0], 'green'))
+        print(colored(the_tile.description, 'green'))
 
-        if len(the_tile) < 2:
-            return
-
-        item_list = the_tile[1]
+        item_list = the_tile.items
         if (item_list is not None and len(item_list) > 0):
             print()
             print(colored('You see the following items:', 'green'))
@@ -113,7 +110,6 @@ class Player:
             print(colored('Drop what?', 'yellow'))
         else:
             item_to_drop = words_in_command[1]
-            the_tile = functions.globals.the_world.tiles[(self.x, self.y)]
             item_not_found = True
             item_dropped = None
             inventory = self.inventory
@@ -127,16 +123,7 @@ class Player:
                     break
 
             if item_dropped is not None:
-                the_tile = functions.globals.the_world.tiles[(self.x, self.y)]
-                item_list = []
-                if len(the_tile) >= 2:
-                    item_list = the_tile[1]
-                else:
-                    the_tile.append([])
-                    
-                item_list.append(item_dropped)
-                the_tile[1] = item_list
-                functions.globals.the_world.tiles[(self.x, self.y)] = the_tile
+                functions.globals.the_world.tiles[(self.x, self.y)].items.append(item_dropped)
 
             if item_not_found:
                 print(colored("You don't have that item.", 'yellow'))
