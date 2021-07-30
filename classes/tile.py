@@ -4,3 +4,4 @@ from dataclasses import dataclass, field
 class Tile:
     description: str = ''
     items: list = field(default_factory=list)
+    npcs: list = field(default_factory=list)

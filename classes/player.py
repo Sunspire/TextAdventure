@@ -1,6 +1,8 @@
 import functions.globals
-import colorama
+import random
+import time
 from termcolor import colored
+from classes.npc import Npc
 
 
 class Player:
@@ -12,6 +14,7 @@ class Player:
         self.y = 0
         self.inventory = {}
         self.command = ''
+        self.is_alive = True
 
     def __str__(self):
         return "{}, {}".format(self.name, self.hp)
@@ -84,6 +87,11 @@ class Player:
         the_tile = functions.globals.the_world.tiles[(self.x, self.y)]
         print(colored(the_tile.description, 'green'))
 
+        npc_list = the_tile.npcs
+        if (npc_list is not None and len(npc_list) > 0):
+            for npc in npc_list:
+                print(colored(f'- {npc.description}', 'green'))
+
         item_list = the_tile.items
         if (item_list is not None and len(item_list) > 0):
             print()
@@ -143,18 +151,77 @@ class Player:
             print(colored(self.description, 'green'))
             return
 
-        if len(the_tile) < 2:
-            print(colored('There is nothing to examine.', 'yellow'))
+        item_list = the_tile.items
+        item_not_found = True
+        if (item_list is not None and len(item_list) > 0):
+            for item in item_list:
+                if item.name == item_to_examine:
+                    print(colored(item.description, 'green'))
+                    item_not_found = False
+                    break
+        
+        if item_not_found:
+            print(colored("You don't see that.", 'yellow'))
+    
+    def attack_npc(self):
+        words_in_command = self.command.split()
+
+        if len(words_in_command) == 1:
+            print(colored('Attack whom?', 'yellow'))
             return
 
-        item_list = the_tile[1]
-
-        for item in item_list:
-            if item.name == item_to_examine:
-                print(colored(item.description, 'green'))
-                break
-        else:
+        npc_to_attack = words_in_command[1]
+        the_tile = functions.globals.the_world.tiles[(self.x, self.y)]
+        npc_list = the_tile.npcs
+        npc_not_found = True
+        
+        if (npc_list is not None and len(npc_list) > 0):
+            for npc in npc_list:
+                if npc.name == npc_to_attack:
+                    print(colored(f'You attack: {npc.name}', 'yellow'))
+                    npc = self.npc_fight(npc)
+                    if npc.is_alive == False:
+                        npc_list.remove(npc)
+                    else:
+                        npc_list[npc_list.index(npc)] = npc
+                    
+                    the_tile.npcs = npc_list
+                    functions.globals.the_world.tiles[(self.x, self.y)] = the_tile
+                    npc_not_found = False
+                    break
+        
+        if npc_not_found:
             print(colored("You don't see that.", 'yellow'))
+
+    def npc_fight(self, npc: Npc):
+        start_time = time.time()
+        interval = 0.5
+        i = 0
+        
+        while (npc.is_alive or self.is_alive):
+            time.sleep(start_time + i*interval - time.time())
+            i += 0.5
+            attack_priority = random.randrange(0,100)
+            print(f'attack_priority: {attack_priority}')
+            
+            if attack_priority <= 50:
+                npc.hp -= random.randrange(1,11)
+            else:
+                self.hp -= random.randrange(1,11)
+
+            print(f'npc: {npc.hp}')
+            print(f'you: {self.hp}')
+            if npc.hp <= 0:
+                print(colored(f'You slaughtered the {npc.name}', 'magenta'))
+                npc.is_alive = False
+                break
+            
+            if self.hp <= 0:
+                print(colored(f'You died', 'red'))
+                self.is_alive = False
+                return npc
+            
+        return npc
 
     def do_action(self, action):
         action_method = getattr(self, action.method.__name__)

@@ -22,4 +22,5 @@ actions = [
     ,Action(Player.take_item, 'Take item', 'take')
     ,Action(Player.look_inventory, 'Inventory', 'i')
     ,Action(Player.drop_inventory_item, 'Drop item', 'drop')
+    ,Action(Player.attack_npc, 'Attack', 'attack')
 ]

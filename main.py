@@ -43,6 +43,11 @@ def evaluate_command(the_input):
 # testing
 the_world.test_override()
 
-while not is_exit:
-    command = input(colored(f'{the_player} > ', 'cyan'))
+while not is_exit and the_player.is_alive:
+    promt_color = 'cyan'
+    if the_player.hp <= 25:
+        promt_color = 'red'
+    elif the_player.hp <= 75:
+        promt_color = 'yellow'
+    command = input(colored(f'{the_player} > ', promt_color))
     is_exit = evaluate_command(command)
