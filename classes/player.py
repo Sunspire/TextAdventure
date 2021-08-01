@@ -2,11 +2,13 @@ import functions.globals
 import random
 import time
 from termcolor import colored
+from classes.item import Item
 from classes.npc import Npc
 
 
+
 class Player:
-    def __init__(self, name, description, hp):
+    def __init__(self, name: str, description: str, hp: int):
         self.name = name
         self.description = description
         self.hp = hp
@@ -19,13 +21,13 @@ class Player:
     def __str__(self):
         return "{}, {}".format(self.name, self.hp)
 
-    def item_exists(self, item):
+    def item_exists(self, item: Item):
         if self.inventory.get(item.name) is None:
             return False
         else:
             return True
 
-    def move(self, lx, ly, direction):
+    def move(self, lx: int, ly: int, direction: str):
         if not functions.globals.the_world.tile_exists((self.x + lx, self.y + ly)):
             print(colored('You cannot move there.', 'yellow'))
             return

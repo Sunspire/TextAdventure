@@ -2,6 +2,11 @@ from classes.item import Item
 from classes.item import Weapon
 from classes.tile import Tile
 from classes.npc import Npc
+from functions.general import is_json
+
+import json
+
+
 
 the_world = None
 
@@ -16,9 +21,12 @@ class World:
         for y, cols in enumerate(rows):
             for x, cell in enumerate(cols.split('\t')):
                 if cell is not None:
-                    the_tile = Tile()
-                    the_tile.description = cell.replace('\n', '') 
-                    self.tiles[(x, y)] = the_tile
+                    json_string = cell
+                    if is_json(json_string):
+                        json_object = json.loads(json_string)
+                        the_tile = Tile()
+                        the_tile.description = str(json_object['tile_description']) 
+                        self.tiles[(x, y)] = the_tile
 
     def tile_exists(self, coords=(-1, -1)):
         return self.tiles.get(coords) is not None

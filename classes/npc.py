@@ -1,5 +1,5 @@
 class Npc:
-    def __init__(self, name, description, hp: int=50):
+    def __init__(self, name: str, description: str, hp: int=50):
         self.name = name
         self.description = description
         self.hp = hp
