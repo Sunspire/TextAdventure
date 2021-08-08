@@ -10,7 +10,7 @@ functions.globals.init()
 is_exit = False
 the_player = Player('Solargazer', 'An adventurer', 100)
 the_world = functions.globals.the_world
-current_tile = the_world.tiles[(the_player.x, the_player.y)]
+
 
 def evaluate_command(the_input):
     the_input = the_input.strip().lower()
@@ -41,13 +41,13 @@ def evaluate_command(the_input):
 
 
 # testing
-the_world.test_override()
-
+#the_world.test_override()
+current_tile = the_world.tiles[(the_player.x, the_player.y)]
 while not is_exit and the_player.is_alive:
-    promt_color = 'cyan'
+    prompt_color = 'cyan'
     if the_player.hp <= 25:
-        promt_color = 'red'
+        prompt_color = 'red'
     elif the_player.hp <= 75:
-        promt_color = 'yellow'
-    command = input(colored(f'{the_player} > ', promt_color))
+        prompt_color = 'yellow'
+    command = input(colored(f'{the_player} > ', prompt_color))
     is_exit = evaluate_command(command)
