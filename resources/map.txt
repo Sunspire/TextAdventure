@@ -1,3 +1,2 @@
-Start Area	Area one	Area two	Area three
-Area four	Area five	Area six	Area seven
-Area eight	Area nine	Area ten	Area eleven
+{    "tile_description":"You are in a place,\n somewhere,\n anywhere...\n everything is dark, but in the west you see a dim light."    ,"tile_items":[        {            "item_type":"clutter"            ,"item_name":"rope"            ,"item_description":"a coiled rope"            ,"item_value":"2"        },        {            "item_type":"weapon"            ,"item_name":"whip"            ,"item_description":"a whip with small hooks at the tip"            ,"item_value":"10"            ,"item_damage":"15"        }    ]    ,"tile_npcs":[]}	{    "tile_description":"You step out of a cave.\nIt is dawn in this strange land. The dim light that you saw was the sun rising.\\Exists are to the south and east."    ,"tile_items":[]    ,"tile_npcs":[]}
+{    "tile_description":"South1"    ,"tile_items":[]    ,"tile_npcs":[]}	{    "tile_description":"East of South1"    ,"tile_items":[]    ,"tile_npcs":[]}
