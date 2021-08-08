@@ -4,7 +4,7 @@ import time
 from termcolor import colored
 from classes.item import Item
 from classes.npc import Npc
-
+from classes.tile import Tile
 
 
 class Player:
@@ -59,7 +59,7 @@ class Player:
             item_to_take = words_in_command[1]
             the_tile = functions.globals.the_world.tiles[(self.x, self.y)]
             item_not_found = True
-            item_list = the_tile.items
+            item_list = the_tile.get_items()
             if (item_list is not None and len(item_list) > 0):
                 item_taken = None
                 for item in item_list:
@@ -75,9 +75,10 @@ class Player:
                         break
 
                 if item_taken is not None:
-                    item_list.remove(item_taken)
-                    the_tile.items = item_list
-                    functions.globals.the_world.tiles[(self.x, self.y)] = the_tile
+                    #item_list.remove(item_taken)
+                    #the_tile.items = item_list
+                    #functions.globals.the_world.tiles[(self.x, self.y)] = the_tile
+                    functions.globals.the_world.tiles[(self.x, self.y)].remove_item(item_taken)
 
                 if item_not_found:
                     print(colored("You don't find that.", 'yellow'))
@@ -89,25 +90,41 @@ class Player:
         the_tile = functions.globals.the_world.tiles[(self.x, self.y)]
         print(colored(the_tile.description, 'green'))
 
-        npc_list = the_tile.npcs
+        npc_list = the_tile.get_npcs()
         if (npc_list is not None and len(npc_list) > 0):
+            npc_descriptions = []
             for npc in npc_list:
-                print(colored(f'- {npc.description}', 'green'))
+                npc_descriptions.append(npc.description)
 
-        item_list = the_tile.items
+            npc_descriptions.sort()
+            for i, npc in enumerate(npc_descriptions):
+                print(colored(f'- {npc}', 'green'))
+
+        item_list = the_tile.get_items()
         if (item_list is not None and len(item_list) > 0):
             print()
             print(colored('You see the following items:', 'green'))
+            
+            item_names = []
             for item in item_list:
-                print(colored(f'- {item.name}', 'green'))
+                item_names.append(item.name)
+            
+            item_names.sort()
+            for i, item in enumerate(item_names):
+                print(colored(f'- {item}', 'green'))
 
     def look_inventory(self):
         if len(self.inventory) == 0:
             print(colored('Your inventory is empty.', 'yellow'))
             return
         
+        player_items = []
         for item in self.inventory:
-            print(colored(self.inventory[item].name + ' : ' + self.inventory[item].description, 'green'))
+            player_items.append(self.inventory[item].name + ' : ' + self.inventory[item].description)
+
+        player_items.sort()
+        for i, item in enumerate(player_items):
+            print(colored(item, 'green'))
     
     def drop_inventory_item(self):
         if len(self.inventory) == 0:
@@ -133,7 +150,7 @@ class Player:
                     break
 
             if item_dropped is not None:
-                functions.globals.the_world.tiles[(self.x, self.y)].items.append(item_dropped)
+                functions.globals.the_world.tiles[(self.x, self.y)].set_item(item_dropped)
 
             if item_not_found:
                 print(colored("You don't have that item.", 'yellow'))
@@ -146,14 +163,14 @@ class Player:
             return
 
         item_to_examine = words_in_command[1]
-        the_tile = functions.globals.the_world.tiles[(self.x, self.y)]
-
+        
         if item_to_examine == 'self':
             print(colored(self.name, 'green'))
             print(colored(self.description, 'green'))
             return
 
-        item_list = the_tile.items
+        the_tile = functions.globals.the_world.tiles[(self.x, self.y)]
+        item_list = the_tile.get_items()
         item_not_found = True
         if (item_list is not None and len(item_list) > 0):
             for item in item_list:
@@ -174,7 +191,7 @@ class Player:
 
         npc_to_attack = words_in_command[1]
         the_tile = functions.globals.the_world.tiles[(self.x, self.y)]
-        npc_list = the_tile.npcs
+        npc_list = the_tile.get_npcs()
         npc_not_found = True
         
         if (npc_list is not None and len(npc_list) > 0):
