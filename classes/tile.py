@@ -18,6 +18,12 @@ class Tile:
     def get_items(self):
         return self.__items
 
+    def remove_item(self, item):
+        if isinstance(item, Item) or isinstance(item, Weapon) or isinstance(item, Armor):
+            self.__items.remove(item)
+        else:
+            raise TypeError("Only objects of type 'Item', 'Weapon' or 'Armor' are allowed")
+
     def set_npc(self, npc: Npc):
         if isinstance(npc, Npc):
             self.__npcs.append(npc)
@@ -26,3 +32,8 @@ class Tile:
 
     def get_npcs(self):
         return self.__npcs
+    
+    def reset_lists(self):
+        self.__items = []
+        self.__npcs = []
+
