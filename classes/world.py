@@ -1,14 +1,9 @@
-from classes.item import Item
-from classes.item import Weapon
+from classes.item import Armor, ArmorSlot, Item, ItemType, Weapon
 from classes.tile import Tile
 from classes.npc import Npc
 from functions.general import is_json
-
 import json
 
-
-
-the_world = None
 
 class World:
     def __init__(self):
@@ -18,15 +13,49 @@ class World:
         with open('resources/map.txt', 'r') as f:
             rows = f.readlines()
 
-        for y, cols in enumerate(rows):
-            for x, cell in enumerate(cols.split('\t')):
-                if cell is not None:
-                    json_string = cell
-                    if is_json(json_string):
-                        json_object = json.loads(json_string)
-                        the_tile = Tile()
-                        the_tile.description = str(json_object['tile_description']) 
-                        self.tiles[(x, y)] = the_tile
+            for y, cols in enumerate(rows):
+                for x, cell in enumerate(cols.split('\t')):
+                    if cell is not None:
+                        json_string = cell
+                        if is_json(json_string):
+                            json_object = json.loads(json_string)
+                            the_tile = Tile()
+                            the_tile.reset_lists()
+                            tile_items = json_object['tile_items']
+                            tile_npcs = json_object['tile_npcs']
+                            the_tile.description = str(json_object['tile_description'])
+
+                            if len(tile_items) > 0:
+                                for item in tile_items:
+                                    the_item = None
+
+                                    if item['item_type'] == ItemType.armor.name:
+                                        pass
+
+                                    elif item['item_type'] == ItemType.clutter.name:
+                                        the_item = Item(item['item_name'], item['item_description'])
+                                        the_item.value = int(item['item_value'])
+                                        the_item.item_type = ItemType.clutter
+
+                                    elif item['item_type'] == ItemType.weapon.name:
+                                        the_item = Weapon(item['item_name'], item['item_description'])
+                                        the_item.damage = int(item['item_damage'])
+                                        the_item.item_type = ItemType.weapon
+                                    
+                                    if the_item is not None:
+                                        the_tile.set_item(the_item)
+
+                            if len(tile_npcs) > 0:
+                                for npc in tile_npcs:
+                                    the_npc = Npc()
+                                    the_npc.name = npc['npc_name']
+                                    the_npc.description = npc['npc_description']
+                                    the_npc.pronoun = npc['npc_pronoun']
+                                    the_npc.hp = int(npc['npc_hp'])
+                                    the_npc.is_alive = True
+                                    the_tile.set_npc(the_npc)
+
+                            self.tiles[(x, y)] = the_tile
 
     def tile_exists(self, coords=(-1, -1)):
         return self.tiles.get(coords) is not None
